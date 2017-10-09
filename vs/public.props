@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <LibDir>$(SolutionDir)..\..\lib\$(Platform)\</LibDir>
+    <BinDir>$(SolutionDir)..\..\bin\$(Platform)\</BinDir>
+    <SrcDir>$(SolutionDir)..\..\src\</SrcDir>
+    <LuaCDir>$(BinDir)</LuaCDir>
+    <LuaLDir>$(BinDir)lua\</LuaLDir>
+    <LuaLibName>lua</LuaLibName>
+    <LuaLibFullName>lua.lib</LuaLibFullName>
+    <LuaExeName>lua</LuaExeName>
+    <LuaHeaderDir>$(SrcDir)lua-5.3.4\src\</LuaHeaderDir>
+    <LuasocketSocketDllDir>$(LuaCDir)socket\</LuasocketSocketDllDir>
+    <LuasocketSocketDllName>core</LuasocketSocketDllName>
+    <LuasocketSocketLibNeeded>WS2_32.lib;$(LuaLibFullName)</LuasocketSocketLibNeeded>
+    <LuasocketLuaFileOutput>$(LuaLDir)%(Filename)%(Extention)</LuasocketLuaFileOutput>
+    <LuasocketLuaFileOutput_Socket>$(LuaLDir)socket\%(Filename)%(Extention)</LuasocketLuaFileOutput_Socket>
+    <LuasocketMimeDllDir>$(LuaCDir)mime\</LuasocketMimeDllDir>
+    <LuasocketMimeDllName>core</LuasocketMimeDllName>
+    <LuasocketMimeLibNeeded>$(LuaLibFullName)</LuasocketMimeLibNeeded>
+    <Sqlite3LibName>sqlite3</Sqlite3LibName>
+    <Sqlite3LibFullName>sqlite3.lib</Sqlite3LibFullName>
+    <Sqlite3ShellName>sqlite3</Sqlite3ShellName>
+    <LuasqlSqlite3DllDir>$(LuaCDir)luasql\</LuasqlSqlite3DllDir>
+    <LuasqlSqlite3DllName>sqlite3</LuasqlSqlite3DllName>
+    <LuasqlSqlite3LibNeeded>$(LuaLibFullName);$(Sqlite3LibFullName)</LuasqlSqlite3LibNeeded>
+    <Sqlite3HeaderDir>$(SrcDir)sqlite-amalgamation-3200100\</Sqlite3HeaderDir>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemDefinitionGroup />
+  <ItemGroup>
+    <BuildMacro Include="LibDir">
+      <Value>$(LibDir)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="BinDir">
+      <Value>$(BinDir)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="SrcDir">
+      <Value>$(SrcDir)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="LuaCDir">
+      <Value>$(LuaCDir)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="LuaLDir">
+      <Value>$(LuaLDir)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="LuaLibName">
+      <Value>$(LuaLibName)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="LuaLibFullName">
+      <Value>$(LuaLibFullName)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="LuaExeName">
+      <Value>$(LuaExeName)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="LuaHeaderDir">
+      <Value>$(LuaHeaderDir)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="LuasocketSocketDllDir">
+      <Value>$(LuasocketSocketDllDir)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="LuasocketSocketDllName">
+      <Value>$(LuasocketSocketDllName)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="LuasocketSocketLibNeeded">
+      <Value>$(LuasocketSocketLibNeeded)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="LuasocketLuaFileOutput">
+      <Value>$(LuasocketLuaFileOutput)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="LuasocketLuaFileOutput_Socket">
+      <Value>$(LuasocketLuaFileOutput_Socket)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="LuasocketMimeDllDir">
+      <Value>$(LuasocketMimeDllDir)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="LuasocketMimeDllName">
+      <Value>$(LuasocketMimeDllName)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="LuasocketMimeLibNeeded">
+      <Value>$(LuasocketMimeLibNeeded)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="Sqlite3LibName">
+      <Value>$(Sqlite3LibName)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="Sqlite3LibFullName">
+      <Value>$(Sqlite3LibFullName)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="Sqlite3ShellName">
+      <Value>$(Sqlite3ShellName)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="LuasqlSqlite3DllDir">
+      <Value>$(LuasqlSqlite3DllDir)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="LuasqlSqlite3DllName">
+      <Value>$(LuasqlSqlite3DllName)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="LuasqlSqlite3LibNeeded">
+      <Value>$(LuasqlSqlite3LibNeeded)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="Sqlite3HeaderDir">
+      <Value>$(Sqlite3HeaderDir)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+  </ItemGroup>
+</Project>
