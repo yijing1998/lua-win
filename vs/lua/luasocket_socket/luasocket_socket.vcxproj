@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|x64">
-      <Configuration>Debug</Configuration>
-      <Platform>x64</Platform>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|x64">
       <Configuration>Release</Configuration>
@@ -17,13 +17,14 @@
     <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
@@ -35,10 +36,11 @@
   </ImportGroup>
   <ImportGroup Label="Shared">
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\public.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\..\public.props" />
   </ImportGroup>
@@ -47,6 +49,11 @@
     <TargetName>$(LuasocketSocketDllName)</TargetName>
     <TargetExt>.dll</TargetExt>
     <OutDir>$(LuasocketSocketDllDir)</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <TargetName>$(LuasocketSocketDllName)</TargetName>
+    <TargetExt>.dll</TargetExt>
+	<OutDir>$(LuasocketSocketDllDir)</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -65,12 +72,22 @@
       <AdditionalDependencies>$(LuasocketSocketLibNeeded);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(LuaHeaderDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_WINSOCK_DEPRECATED_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;LUASOCKET_API=__declspec(dllexport);%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(LibDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(LuasocketSocketLibNeeded);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\luasocket-3.0-rc1\src\auxiliar.c" />
@@ -90,54 +107,79 @@
     <CustomBuild Include="..\..\..\src\luasocket-3.0-rc1\src\ftp.lua">
       <FileType>Document</FileType>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">copy %(Identity) $(LuaLDir)socket\</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">copy %(Identity) $(LuaLDir)socket\</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(LuasocketLuaFileOutput_Socket)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(LuasocketLuaFileOutput_Socket)</Outputs>
     </CustomBuild>
     <CustomBuild Include="..\..\..\src\luasocket-3.0-rc1\src\headers.lua">
       <FileType>Document</FileType>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">copy %(Identity) $(LuaLDir)socket\</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">copy %(Identity) $(LuaLDir)socket\</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(LuasocketLuaFileOutput_Socket)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(LuasocketLuaFileOutput_Socket)</Outputs>
     </CustomBuild>
     <CustomBuild Include="..\..\..\src\luasocket-3.0-rc1\src\http.lua">
       <FileType>Document</FileType>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">copy %(Identity) $(LuaLDir)socket\</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">copy %(Identity) $(LuaLDir)socket\</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(LuasocketLuaFileOutput_Socket)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(LuasocketLuaFileOutput_Socket)</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
     </CustomBuild>
     <CustomBuild Include="..\..\..\src\luasocket-3.0-rc1\src\ltn12.lua">
       <FileType>Document</FileType>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">copy %(Identity) $(LuaLDir)</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">copy %(Identity) $(LuaLDir)</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(LuasocketLuaFileOutput)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(LuasocketLuaFileOutput)</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
     </CustomBuild>
     <CustomBuild Include="..\..\..\src\luasocket-3.0-rc1\src\mbox.lua">
       <FileType>Document</FileType>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">copy %(Identity) $(LuaLDir)socket\</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">copy %(Identity) $(LuaLDir)socket\</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(LuasocketLuaFileOutput_Socket)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(LuasocketLuaFileOutput_Socket)</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
     </CustomBuild>
     <CustomBuild Include="..\..\..\src\luasocket-3.0-rc1\src\smtp.lua">
       <FileType>Document</FileType>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">copy %(Identity) $(LuaLDir)socket\</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">copy %(Identity) $(LuaLDir)socket\</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(LuasocketLuaFileOutput_Socket)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(LuasocketLuaFileOutput_Socket)</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
     </CustomBuild>
     <CustomBuild Include="..\..\..\src\luasocket-3.0-rc1\src\socket.lua">
       <FileType>Document</FileType>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">copy %(Identity) $(LuaLDir)</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">copy %(Identity) $(LuaLDir)</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(LuasocketLuaFileOutput)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(LuasocketLuaFileOutput)</Outputs>
     </CustomBuild>
     <CustomBuild Include="..\..\..\src\luasocket-3.0-rc1\src\tp.lua">
       <FileType>Document</FileType>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">copy %(Identity) $(LuaLDir)socket\</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">copy %(Identity) $(LuaLDir)socket\</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(LuasocketLuaFileOutput_Socket)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(LuasocketLuaFileOutput_Socket)</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
     </CustomBuild>
     <CustomBuild Include="..\..\..\src\luasocket-3.0-rc1\src\url.lua">
       <FileType>Document</FileType>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">copy %(Identity) $(LuaLDir)socket\</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">copy %(Identity) $(LuaLDir)socket\</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(LuasocketLuaFileOutput_Socket)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(LuasocketLuaFileOutput_Socket)</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
     </CustomBuild>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
